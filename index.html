@@ -15,41 +15,15 @@
       height: 100vh;
       overflow: hidden;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #020208;
+      background: radial-gradient(circle, #1a1a3a 0%, #050510 100%);
       color: #fff;
       position: relative;
-    }
-
-    /* Hiệu ứng bầu trời sao lấp lánh background */
-    .stars-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    }
-
-    /* Tạo các ngôi sao ẩn hiện ngẫu nhiên */
-    .star-twinkle {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #fff, 0 0 12px #ffd700;
-      animation: twinkle linear infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.3); }
     }
 
     /* Tiêu đề & Logo */
     #header {
       position: fixed;
-      top: 20px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 100;
@@ -57,11 +31,11 @@
     }
 
     #header h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       color: #ffd700;
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 140, 0, 0.8);
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8), 0 0 25px rgba(255, 140, 0, 0.6);
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
     }
 
     /* Container quả cầu 3D */
@@ -74,73 +48,54 @@
       transform: translate(-50%, -50%);
       transform-style: preserve-3d;
       transition: transform 0.5s ease;
-      z-index: 10;
     }
 
-    /* Thẻ tên học sinh có ngôi sao phía trước */
     .name-tag {
       position: absolute;
       left: 50%;
       top: 50%;
       transform-origin: 0 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-weight: bold;
       font-size: 18px;
-      color: #ffffff;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.9);
+      color: #e0f7fa;
+      text-shadow: 0 0 8px rgba(0, 229, 255, 0.8);
       white-space: nowrap;
       user-select: none;
       cursor: pointer;
     }
 
-    /* Ngôi sao nhỏ phía trước tên */
-    .star-icon {
-      width: 22px;
-      height: 22px;
-      filter: drop-shadow(0 0 6px #ffd700);
-      animation: spinStar 3s linear infinite;
-    }
-
-    @keyframes spinStar {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* Bảng điều khiển nút bấm */
     #controls {
       position: fixed;
-      bottom: 25px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 100;
       display: flex;
-      gap: 15px;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 12px 28px;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px 24px;
       border-radius: 50px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 215, 0, 0.2);
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
     button {
-      background: linear-gradient(135deg, #ffd700, #ff8c00);
-      color: #1a0033;
+      background: linear-gradient(135deg, #ff007f, #7928ca);
+      color: white;
       border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 800;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: bold;
       border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.2s ease;
     }
 
     button:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.4);
     }
 
     button:active {
@@ -154,7 +109,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.7);
       z-index: 200;
       display: none;
       justify-content: center;
@@ -162,13 +117,13 @@
     }
 
     .modal-content {
-      background: #141428;
+      background: #1e1e2f;
       padding: 25px;
       border-radius: 15px;
       width: 400px;
       max-width: 90%;
-      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-      border: 1px solid #ffd700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid #333;
     }
 
     .modal-content h3 {
@@ -179,7 +134,7 @@
     textarea {
       width: 100%;
       height: 180px;
-      background: #090915;
+      background: #0f0f1a;
       border: 1px solid #444;
       color: #fff;
       padding: 10px;
@@ -187,255 +142,9 @@
       resize: vertical;
       font-family: inherit;
       margin-bottom: 15px;
-      font-size: 15px;
     }
 
     /* Hiển thị kết quả trúng thưởng */
-    #resultOverlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.88);
-      z-index: 300;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.4s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .star-card {
-      text-align: center;
-      position: relative;
-    }
-
-    .star-svg-large {
-      width: 200px;
-      height: 200px;
-      filter: drop-shadow(0 0 30px #ffd700);
-      animation: pulse 1.2s infinite alternate ease-in-out;
-    }
-
-    @keyframes pulse {
-      from { transform: scale(0.95); }
-      to { transform: scale(1.15); }
-    }
-
-    .winner-name {
-      font-size: 3rem;
-      font-weight: 900;
-      color: #fff;
-      margin-top: 25px;
-      text-shadow: 0 0 20px #ffd700, 0 0 40px #ff8c00;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Bầu trời sao lấp lánh -->
-  <div class="stars-bg" id="starsBg"></div>
-
-  <!-- Tiêu đề game -->
-  <div id="header">
-    <h1>NGÔI SAO MAY MẮN</h1>
-  </div>
-
-  <!-- Quả cầu 3D chứa danh sách học sinh -->
-  <div id="sphereContainer"></div>
-
-  <!-- Bảng điều khiển nút bấm -->
-  <div id="controls">
-    <button onclick="startSpin()">BẮT ĐẦU QUAY</button>
-    <button onclick="openModal()">NHẬP DANH SÁCH</button>
-    <button onclick="resetGame()">LÀM MỚI</button>
-  </div>
-
-  <!-- Modal nhập danh sách -->
-  <div id="inputModal">
-    <div class="modal-content">
-      <h3>Nhập tên học sinh (mỗi tên 1 dòng):</h3>
-      <textarea id="nameInput" placeholder="Nhập danh sách tại đây..."></textarea>
-      <div style="text-align: right;">
-        <button onclick="saveNames()">LƯU LẠI</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Màn hình chúc mừng khi chọn được học sinh -->
-  <div id="resultOverlay" onclick="closeResult()">
-    <div class="star-card">
-      <svg class="star-svg-large" viewBox="0 0 24 24" fill="#ffd700">
-        <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192z"/>
-      </svg>
-      <div id="winnerDisplay" class="winner-name"></div>
-    </div>
-    <p style="margin-top: 30px; color: #ffd700; font-size: 15px;">(Bấm bất kỳ đâu để quay tiếp)</p>
-  </div>
-
-  <!-- Hiệu ứng âm thanh -->
-  <audio id="bgMusic" loop src="https://www.nhaccuatui.com/song/tF61iRefhUCV"></audio>
-  <audio id="winMusic" src="https://tiengdong.com/am-thanh-chuc-mung-chien-thang"></audio>
-
-  <script>
-    // 1. Tạo hiệu ứng Bầu trời sao lấp lánh Background
-    function createStarfield() {
-      const bg = document.getElementById('starsBg');
-      const starCount = 120;
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star-twinkle';
-        const size = Math.random() * 3 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDuration = (Math.random() * 3 + 1.5) + 's';
-        star.style.animationDelay = (Math.random() * 3) + 's';
-        bg.appendChild(star);
-      }
-    }
-    createStarfield();
-
-    // 2. Quản lý danh sách học sinh
-    let names = [
-      "Nguyễn Văn A", "Trần Thị B", "Lê Văn C", "Phạm Minh D", 
-      "Hoàng Anh E", "Vũ Thị F", "Đỗ Văn G", "Bùi Thị H",
-      "Đặng Văn I", "Nông Thị K", "Phan Văn L", "Dương Thị M"
-    ];
-    let remainingNames = [...names];
-
-    const container = document.getElementById('sphereContainer');
-    const radius = 230;
-    let tags = [];
-    let angleX = 0.003;
-    let angleY = 0.003;
-    let isSpinning = false;
-    let animFrame;
-
-    // SVG Ngôi sao màu vàng thu nhỏ
-    const starSvgIcon = `
-      <svg class="star-icon" viewBox="0 0 24 24" fill="#ffd700">
-        <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192z"/>
-      </svg>
-    `;
-
-    function initSphere() {
-      container.innerHTML = '';
-      tags = [];
-      const total = remainingNames.length;
-      if (total === 0) return;
-
-      for (let i = 0; i < total; i++) {
-        const phi = Math.acos(-1 + (2 * i + 1) / total);
-        const theta = Math.sqrt(total * Math.PI) * phi;
-
-        const elem = document.createElement('div');
-        elem.className = 'name-tag';
-        // Thêm ngôi sao trước tên mỗi học sinh
-        elem.innerHTML = `${starSvgIcon} <span>${remainingNames[i]}</span>`;
-        container.appendChild(elem);
-
-        tags.push({
-          element: elem,
-          x: radius * Math.cos(theta) * Math.sin(phi),
-          y: radius * Math.sin(theta) * Math.sin(phi),
-          z: radius * Math.cos(phi)
-        });
-      }
-    }
-
-    function rotate() {
-      const sinX = Math.sin(angleX);
-      const cosX = Math.cos(angleX);
-      const sinY = Math.sin(angleY);
-      const cosY = Math.cos(angleY);
-
-      tags.forEach(tag => {
-        let y1 = tag.y * cosX - tag.z * sinX;
-        let z1 = tag.z * cosX + tag.y * sinX;
-        
-        let x2 = tag.x * cosY + z1 * sinY;
-        let z2 = z1 * cosY - tag.x * sinY;
-
-        tag.x = x2;
-        tag.y = y1;
-        tag.z = z2;
-
-        const alpha = (z2 + radius) / (2 * radius);
-        const scale = 0.6 + alpha * 0.6;
-
-        tag.element.style.transform = `translate3d(${tag.x}px, ${tag.y}px, ${tag.z}px) scale(${scale})`;
-        tag.element.style.opacity = alpha + 0.2;
-      });
-
-      animFrame = requestAnimationFrame(rotate);
-    }
-
-    function startSpin() {
-      if (isSpinning || remainingNames.length === 0) return;
-      isSpinning = true;
-
-      document.getElementById('bgMusic').play().catch(() => {});
-
-      let speedCount = 0;
-      const speedUp = setInterval(() => {
-        angleX = (Math.random() - 0.5) * 0.35;
-        angleY = (Math.random() - 0.5) * 0.35;
-        speedCount++;
-
-        if (speedCount > 28) {
-          clearInterval(speedUp);
-          setTimeout(() => {
-            angleX = 0.003;
-            angleY = 0.003;
-            isSpinning = false;
-            pickWinner();
-          }, 1200);
-        }
-      }, 70);
-    }
-
-    function pickWinner() {
-      const randomIndex = Math.floor(Math.random() * remainingNames.length);
-      const winner = remainingNames[randomIndex];
-
-      remainingNames.splice(randomIndex, 1);
-
-      document.getElementById('winnerDisplay').innerText = winner;
-      document.getElementById('resultOverlay').style.display = 'flex';
-      document.getElementById('winMusic').play().catch(() => {});
-    }
-
-    function closeResult() {
-      document.getElementById('resultOverlay').style.display = 'none';
-      initSphere();
-    }
-
-    function openModal() {
-      document.getElementById('nameInput').value = names.join('\n');
-      document.getElementById('inputModal').style.display = 'flex';
-    }
-
-    function saveNames() {
-      const text = document.getElementById('nameInput').value;
-      names = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
-      remainingNames = [...names];
-      document.getElementById('inputModal').style.display = 'none';
-      initSphere();
-    }
-
-    function resetGame() {
-      remainingNames = [...names];
-      initSphere();
-    }
-/* Hiển thị kết quả trúng thưởng */
     #resultOverlay {
       position: fixed;
       top: 0;
@@ -659,7 +368,8 @@
       remainingNames = [...names];
       initSphere();
     }
-    // Khởi tạo ban đầu
+
+    // Khởi chạy ban đầu
     document.getElementById('nameInput').value = names.join('\n');
     initSphere();
     rotate();
