@@ -435,7 +435,230 @@
       remainingNames = [...names];
       initSphere();
     }
+/* Hiển thị kết quả trúng thưởng */
+    #resultOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 300;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.4s ease;
+    }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .star-card {
+      text-align: center;
+      position: relative;
+    }
+
+    .star-svg {
+      width: 180px;
+      height: 180px;
+      filter: drop-shadow(0 0 20px #ffd700);
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .winner-name {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 20px;
+      text-shadow: 0 0 15px #ff007f;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header">
+    <h1>NGÔI SAO MAY MẮN</h1>
+  </div>
+
+  <div id="sphereContainer"></div>
+
+  <div id="controls">
+    <button onclick="startSpin()">Quay Ngẫu Nhiên</button>
+    <button onclick="openModal()">Nhập Danh Sách</button>
+    <button onclick="resetGame()">Làm Mới</button>
+  </div>
+
+  <div id="inputModal">
+    <div class="modal-content">
+      <h3>Mỗi tên trên một dòng:</h3>
+      <textarea id="nameInput" placeholder="Nhập tên tại đây..."></textarea>
+      <div style="text-align: right;">
+        <button onclick="saveNames()">Lưu Danh Sách</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="resultOverlay" onclick="closeResult()">
+    <div class="star-card">
+      <svg class="star-svg" viewBox="0 0 24 24" fill="#ffd700">
+        <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.399 8.165L12 18.896l-7.333 3.863 1.399-8.165-5.934-5.784 8.2-1.192z"/>
+      </svg>
+      <div id="winnerDisplay" class="winner-name"></div>
+    </div>
+    <p style="margin-top: 25px; color: #aaa; font-size: 14px;">(Bấm bất kỳ đâu để đóng)</p>
+  </div>
+
+  <audio id="bgMusic" loop src="https://actions.google.com/sounds/v1/ambiences/space_ship_hum.ogg"></audio>
+  <audio id="winMusic" src="https://actions.google.com/sounds/v1/cheering/applause_moderate.ogg"></audio>
+
+  <script>
+    let names = [
+      "Nguyễn Văn A", "Trần Thị B", "Lê Văn C", "Phạm Minh D", 
+      "Hoàng Anh E", "Vũ Thị F", "Đỗ Văn G", "Bùi Thị H",
+      "Đặng Văn I", "Nông Thị K", "Phan Văn L", "Dương Thị M"
+    ];
+    let remainingNames = [...names];
+
+    const container = document.getElementById('sphereContainer');
+    const radius = 220;
+    let tags = [];
+    let angleX = 0.003;
+    let angleY = 0.003;
+    let currentRotationX = 0;
+    let currentRotationY = 0;
+    let isSpinning = false;
+    let animFrame;
+
+    function initSphere() {
+      container.innerHTML = '';
+      tags = [];
+      const total = remainingNames.length;
+      if (total === 0) return;
+
+      for (let i = 0; i < total; i++) {
+        const phi = Math.acos(-1 + (2 * i + 1) / total);
+        const theta = Math.sqrt(total * Math.PI) * phi;
+
+        const elem = document.createElement('div');
+        elem.className = 'name-tag';
+        elem.innerText = remainingNames[i];
+        container.appendChild(elem);
+
+        tags.push({
+          element: elem,
+          x: radius * Math.cos(theta) * Math.sin(phi),
+          y: radius * Math.sin(theta) * Math.sin(phi),
+          z: radius * Math.cos(phi)
+        });
+      }
+    }
+
+    function rotate() {
+      if (!isSpinning) {
+        currentRotationX += angleX;
+        currentRotationY += angleY;
+      } else {
+        currentRotationX += angleX;
+        currentRotationY += angleY;
+      }
+
+      const sinX = Math.sin(angleX);
+      const cosX = Math.cos(angleX);
+      const sinY = Math.sin(angleY);
+      const cosY = Math.cos(angleY);
+
+      tags.forEach(tag => {
+        // Xoay quanh trục X
+        let y1 = tag.y * cosX - tag.z * sinX;
+        let z1 = tag.z * cosX + tag.y * sinX;
+        
+        // Xoay quanh trục Y
+        let x2 = tag.x * cosY + z1 * sinY;
+        let z2 = z1 * cosY - tag.x * sinY;
+
+        tag.x = x2;
+        tag.y = y1;
+        tag.z = z2;
+
+        const alpha = (z2 + radius) / (2 * radius);
+        const scale = 0.6 + alpha * 0.6;
+
+        tag.element.style.transform = `translate3d(${tag.x}px, ${tag.y}px, ${tag.z}px) scale(${scale})`;
+        tag.element.style.opacity = alpha + 0.2;
+      });
+
+      animFrame = requestAnimationFrame(rotate);
+    }
+
+    function startSpin() {
+      if (isSpinning || remainingNames.length === 0) return;
+      isSpinning = true;
+
+      document.getElementById('bgMusic').play().catch(() => {});
+
+      // Tăng tốc độ xoay
+      let speedCount = 0;
+      const speedUp = setInterval(() => {
+        angleX = (Math.random() - 0.5) * 0.3;
+        angleY = (Math.random() - 0.5) * 0.3;
+        speedCount++;
+
+        if (speedCount > 25) {
+          clearInterval(speedUp);
+          // Giảm tốc độ và dừng
+          setTimeout(() => {
+            angleX = 0.003;
+            angleY = 0.003;
+            isSpinning = false;
+            pickWinner();
+          }, 1200);
+        }
+      }, 80);
+    }
+
+    function pickWinner() {
+      const randomIndex = Math.floor(Math.random() * remainingNames.length);
+      const winner = remainingNames[randomIndex];
+
+      // Loại tên đã trúng ra khỏi danh sách còn lại
+      remainingNames.splice(randomIndex, 1);
+
+      // Hiển thị kết quả
+      document.getElementById('winnerDisplay').innerText = winner;
+      document.getElementById('resultOverlay').style.display = 'flex';
+      document.getElementById('winMusic').play().catch(() => {});
+    }
+
+    function closeResult() {
+      document.getElementById('resultOverlay').style.display = 'none';
+      initSphere(); // Cập nhật lại quả cầu tên sau khi bỏ tên vừa trúng
+    }
+
+    function openModal() {
+      document.getElementById('nameInput').value = names.join('\n');
+      document.getElementById('inputModal').style.display = 'flex';
+    }
+
+    function saveNames() {
+      const text = document.getElementById('nameInput').value;
+      names = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      remainingNames = [...names];
+      document.getElementById('inputModal').style.display = 'none';
+      initSphere();
+    }
+
+    function resetGame() {
+      remainingNames = [...names];
+      initSphere();
+    }
     // Khởi tạo ban đầu
     document.getElementById('nameInput').value = names.join('\n');
     initSphere();
